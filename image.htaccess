@@ -1,0 +1,32 @@
+# Enable Browser Caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+</IfModule>
+
+# Enable Gzip Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE image/jpeg
+    AddOutputFilterByType DEFLATE image/png
+    AddOutputFilterByType DEFLATE image/gif
+    AddOutputFilterByType DEFLATE image/webp
+</IfModule>
+
+# Enable Lazy Loading
+<IfModule mod_headers.c>
+    Header set loading "lazy"
+</IfModule>
+
+# Enable Keep-Alive
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# Prevent Hotlinking
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https://(www\.)?yourwebsite\.com/.*$ [NC]
+RewriteRule \.(jpg|jpeg|png|gif|webp)$ - [F]
